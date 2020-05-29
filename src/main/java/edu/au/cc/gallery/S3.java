@@ -40,7 +40,7 @@ public class S3 {
 	public static void demo() {
 	S3 s3 = new S3();
 	s3.connect();
-	s3.createBucket("edu.au.cc.image-gallery");
-	s3.putObject("edu.au.cc.image-gallery", "banana", "yellow");	
+	s3.createBucket("this.image.gallery");
+	s3.putObject("this.image.gallery", "banana", "yellow");	
 	}
  }
