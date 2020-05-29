@@ -21,6 +21,10 @@ repositories {
 }
 
 dependencies {
+    implementation platform('software.amazon.awssdk:bom:2.13.20')
+    implementation 'software.amazon.awssdk:s3'        
+
+
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
 
