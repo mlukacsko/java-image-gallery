@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class DB {
+public class UserAdmin {
 
     private static final String dbUrl = "jdbc:postgresql://demo-database-1.cy7qnq8x0c88.us-east-2.rds.amazonaws.com/image_gallery1";
     private Connection connection;
