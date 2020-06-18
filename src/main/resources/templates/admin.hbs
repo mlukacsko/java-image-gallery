@@ -1,0 +1,12 @@
+<h1>Database Users: </h1>
+  {{#> adminPage}}
+  <ol>
+  {{#users}}
+  <li><a href ="/admin/edit?name={{username}}">{{username}}</a> <button onclick="location.href='/admin/delete?name={{username}}'"type="button">Delete User </button></li>
+  {{/users}}
+</ol>
+<br>
+<button onclick="location.href='/admin/add'" type ="button">Add New User</button><br>
+{{/adminPage}}
+
+</html>

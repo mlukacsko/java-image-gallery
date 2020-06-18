@@ -1,0 +1,23 @@
+Hello!
+
+Apologies for all the comments.  My hope is this will be easier to see everything in one readme documents.  
+To run the web app portion of this project, navigate to: ~/java-image-gallery and run a gradle run command.
+
+From there navigate to http://3.21.174.163:5000/admin.  
+
+The Database Users page will display the users currently in the database.  
+Unfortunately, I was unable to get the delete and Add user functionality implemented in time.  
+However, I do have routes for them in App.java that take user input and/or lead you back to the admin page.  
+Because I cannot add or delete users, I thought it would be useful to provide my image-gallery1 database credentials.
+Please use the following to connect, add a user, and see the new user on the admin page:
+
+To connect to my database:
+psql -h image-gallery.cy7qnq8x0c88.us-east-2.rds.amazonaws.com -U image_gallery1
+
+The password for my image-gallery1 user is “simple”.  
+From there, you can do a select * from users; and see “mike” and “Evie” are users.  
+Feel free to add and/or remove what you would like to test.  
+
+Regard,
+Michael L. 
+

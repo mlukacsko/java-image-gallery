@@ -13,26 +13,12 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+public class UserAdmin_org {
 
-
-public class DB {
-
-    private static final String dbUrl = "jdbc:postgresql://image-gallery.cy7qnq8x0c88.us-east-2.rds.amazonaws.com/image_gallery1";
+    private static final String dbUrl = "jdbc:postgresql://demo-database-1.cy7qnq8x0c88.us-east-2.rds.amazonaws.com/image_gallery1";
     private Connection connection;
 
-    private JSONObject getSecret() {
-    String s = Secrets.getSecretImageGallery();
-    return new JSONObject(s);
-    }
-
-    private String getPassword(JSONObject secret) {
-   return secret.getString("password"); 
-
-   }
-
-/*    private String getPassword(){
+    private String getPassword(){
         try (BufferedReader br = new BufferedReader(new FileReader("/home/ec2-user/sql-passwd"))) {
             String result = br.readLine();
             return result;
@@ -43,30 +29,17 @@ public class DB {
         }
         return null;
     }
-*/
+
 
     public void connect() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
-	    JSONObject secret = getSecret();
-            connection = DriverManager.getConnection(dbUrl, "image_gallery1", getPassword(secret));
+            connection = DriverManager.getConnection(dbUrl, "image_gallery1", getPassword());
         }
         catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
     }
-
-    public ArrayList<String> listUsers() throws SQLException {
-    ArrayList<String> list = new ArrayList<>();
-    connect();
-    PreparedStatement stmt = connection.prepareStatement("select * from users");
-    ResultSet rs = stmt.executeQuery();
-    while (rs.next()) {
-    list.add(rs.getString(1));
-    }
-	return list;
-    }
-
     public void listUser() throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("select * from users");
         ResultSet rs = stmt.executeQuery();
