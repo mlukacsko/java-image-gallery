@@ -1,3 +1,4 @@
+
 package edu.au.cc.gallery;
 
 import software.amazon.awssdk.regions.Region;
@@ -41,6 +42,6 @@ public class S3 {
 	S3 s3 = new S3();
 	s3.connect();
 	s3.createBucket("this.image.gallery");
-	s3.putObject("this.image.gallery", "banana", "yellow");	
+        s3.putObject("this.image.gallery", "banana", "yellow");	
 	}
  }

@@ -15,7 +15,12 @@ public class App {
 
     public static void main(String[] args) throws Exception{
        //System.out.println(new App().getGreeting());
-	port(5000);
+	String portString = System.getenv("JETTY_PORT");
+	if (portString == null || portString.equals( ""))
+		port(5000);
+	else 
+		port(Integer.parseInt(portString));
+
 	get("/hello", (req, res) -> "hello world");
 	get("/admin", (req, res) -> {
 		Map<String, Object> model = new HashMap<String, Object>();
