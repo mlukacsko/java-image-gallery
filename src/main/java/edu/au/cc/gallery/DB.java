@@ -49,7 +49,7 @@ public class DB {
         try {
             Class.forName("org.postgresql.Driver");
 	    JSONObject secret = getSecret();
-            connection = DriverManager.getConnection(dbUrl, "image_gallery1", getPassword(secret));
+            connection = DriverManager.getConnection(dbUrl, "image_gallery1", "simple");
         }
         catch (ClassNotFoundException ex) {
             System.out.println(ex);
