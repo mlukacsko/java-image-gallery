@@ -49,12 +49,30 @@ public class DB {
         try {
             Class.forName("org.postgresql.Driver");
 	    JSONObject secret = getSecret();
-            connection = DriverManager.getConnection(dbUrl, "image_gallery1", getPassword(secret));
+            connection = DriverManager.getConnection(dbUrl, "image_gallery1", "simple");
         }
         catch (ClassNotFoundException ex) {
             System.out.println(ex);
         }
     }
+
+   public ResultSet execute(String query) throws SQLException {
+      PreparedStatement stmt = connection.prepareStatement(query);
+      ResultSet rs = stmt.executeQuery();
+      return rs;
+   }
+
+   public void execute(String query, String[] values) throws SQLException {
+      PreparedStatement stmt = connection.prepareStatement(query);
+     for (int i = 0; i < values.length; i++)
+         stmt.setString(i+1, values[i]);
+      stmt.execute();
+  }
+
+   public void close() throws SQLException {
+       connection.close();
+   }
+
 
     public ArrayList<String> listUsers() throws SQLException {
     ArrayList<String> list = new ArrayList<>();

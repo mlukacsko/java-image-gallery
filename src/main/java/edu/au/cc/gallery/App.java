@@ -5,6 +5,7 @@
 package edu.au.cc.gallery;
 import static spark.Spark.*;
 import spark.ModelAndView;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.*;
 
@@ -13,6 +14,30 @@ public class App {
         return "Hello Michael!!";
     }
 
+   private static String listUsers() {
+	try {
+		StringBuffer sb = new StringBuffer();
+		UserDAO dao = Postgres.getUserDAO();
+		for (User u: dao.getUsers())
+			sb.append(u.toString()+"<br/>");
+		return sb.toString();
+	}
+	catch (Exception e) {
+		return e.getMessage();
+	}
+   }
+
+   private static String addUser(String username, String password, String fullName, Response r) {
+      try {
+	 UserDAO dao = Postgres.getUserDAO();
+	 dao.addUser(new User(username, password, fullName));
+	r.redirect("/users");
+	return "";
+      } 
+     catch (Exception e) {
+	  return e.getMessage();
+     }
+  }
     public static void main(String[] args) throws Exception{
        //System.out.println(new App().getGreeting());
 	String portString = System.getenv("JETTY_PORT");
@@ -21,41 +46,7 @@ public class App {
 	else 
 		port(Integer.parseInt(portString));
 
-	get("/hello", (req, res) -> "hello world");
-	get("/admin", (req, res) -> {
-		Map<String, Object> model = new HashMap<String, Object>();
-		ArrayList<String> list = new ArrayList();
-		ArrayList<Map> listMap = new ArrayList();
-		DB db = new DB();
-		list = db.listUsers();
-		list.forEach((i) -> {
-			Map<String, Object> temp = new HashMap<String, Object>();
-			temp.put("username", i);
-			listMap.add(temp);
-		});
-		model.put("users", listMap);
-		return new HandlebarsTemplateEngine()
-		.render(new ModelAndView(model, "admin.hbs"));
-	});
-	 get("/admin/edit", (req, res) -> {
-                Map<String, Object> model = new HashMap<String, Object>();
-                //model.put(db.listUser());
-                return new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "edit.hbs"));
-        });
-	get("/admin/delete", (req, res) -> {
-                Map<String, Object> model = new HashMap<String, Object>();
-                //model.put(db.listUser());
-                return new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "delete.hbs"));
-        });
-	get("/admin/add", (req, res) -> {
-                Map<String, Object> model = new HashMap<String, Object>();
-                //model.put(db.listUser());
-                return new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "add.hbs"));
-        });
-
+	new Admin().addRoutes();
 
     }
 }

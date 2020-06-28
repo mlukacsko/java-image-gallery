@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h1>Users</h1>
+    {{# users }}
+     <li><a href="/admin/viewUser/{{ username }}">{{ fullName }} ({{username}})<</a>
+       --
+	<a href ="/admin/deleteUser/{{ username}}">Delete</a></li>
+    {{/ users }}
+    {{^ users }}
+	No Users
+    {{/ users }}
+  </body>
+</html>
