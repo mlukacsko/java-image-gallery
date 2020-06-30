@@ -27,7 +27,7 @@ git clone https://github.com/mlukacsko/ansible.git
 chown -R ec2-user:ec2-user java-image-gallery
 chown -R ec2-user:ec2-user ansible
 
-CONFIG_BUCKET="s3://edu.au.cc.image-gallery-config"
+CONFIG_BUCKET="s3://edu.au.cc.image-gallery-configuration"
 aws s3 cp ${CONFIG_BUCKET}/nginx/nginx.conf /etc/nginx/nginx.conf
 aws s3 cp ${CONFIG_BUCKET}/nginx/default.d/image_gallery.conf /etc/nginx/default.d/image_gallery.conf
 
