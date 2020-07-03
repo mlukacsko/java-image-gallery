@@ -20,7 +20,10 @@ import org.json.JSONObject;
 public class DB {
 
     private static final String dbUrl = "jdbc:postgresql://m5-ig-rds.cy7qnq8x0c88.us-east-2.rds.amazonaws.com/image-gallery";
+<<<<<<< HEAD
+=======
 //    private static final String dbUrl = "jdbc:postgresql://image-gallery.cy7qnq8x0c88.us-east-2.rds.amazonaws.com/image_gallery1";
+>>>>>>> 678047f29b10e75b1e2e645513e36ad7449516de
     private Connection connection;
 
     private JSONObject getSecret() {
@@ -69,6 +72,21 @@ public class DB {
          stmt.setString(i+1, values[i]);
       stmt.execute();
   }
+
+    public ResultSet executeQuery(String query) throws SQLException {
+      PreparedStatement stmt = connection.prepareStatement(query);
+      ResultSet rs = stmt.executeQuery();
+      return rs;
+   }
+
+   public ResultSet executeQuery(String query, String[] values) throws SQLException {
+      PreparedStatement stmt = connection.prepareStatement(query);
+     for (int i = 0; i < values.length; i++)
+         stmt.setString(i+1, values[i]);
+      return stmt.executeQuery();
+  }
+
+
 
    public void close() throws SQLException {
        connection.close();
