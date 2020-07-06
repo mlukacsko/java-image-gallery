@@ -92,15 +92,16 @@ public class Admin {
 			if (u == null || !u.getPassword().equals(req.queryParams("password")))
 				return "Invalid username or password, go back to try again";
 			req.session().attribute("user", username);
-			resp.redirect("/debugSession");
-			return "";
-		} catch (Exception e) {
+			resp.redirect("/");
+		} 
+		catch (Exception e) {
 			return e.getMessage();
 		}
+		return "";
         }
 
 	private boolean isAdmin(String username) {
-		return username != null && username.equals("Emilia");
+		return username != null && (username.equals("dongji") || username.equals("admin"));
 	}
 
 	private void checkAdmin(Request req, Response resp) {
@@ -116,14 +117,18 @@ public class Admin {
                         .render(new ModelAndView(model, "mainMenu.hbs"));
 	}
 
-/*	public void uploadImage(Request req, Response resp) {
-	
+	private String uploadImage(Request req, Response resp) {
+		Map<String, Object> model = new HashMap<String, Object>();
+        	return new HandlebarsTemplateEngine()
+                	.render(new ModelAndView(model, "uploadImage.hbs"));
 	}
 
-	public String viewImage(Request req, Response resp) {
-                return "";
+	private String viewImages(Request req, Response resp) {
+               Map<String, Object> model = new HashMap<String, Object>();
+	        return new HandlebarsTemplateEngine()
+        	        .render(new ModelAndView(model, "viewImages.hbs"));
         }
-*/
+
 
 	public void addRoutes() {
 		get("/admin/users", (req, res) -> listUsers());
@@ -136,9 +141,12 @@ public class Admin {
                 before("/admin/*", (request, response) -> checkAdmin(request, response));
                 post("/login", (req, res) -> loginPost(req, res));
 		get("/debugSession", (req, res) -> debugSession(req, res));
+		before("/", (req, res) -> checkAdmin(req, res));
 		get("/", (req, res) -> mainMenu(req, res));
-  //              post("/uploadImage", (req, res) -> uploadImage(req, res));
-//		get("/viewImage", (req, res) -> viewImage(req, res));
+		before("/uploadImage", (req, res) -> checkAdmin(req, res));
+	        before("/viewImages", (req, res) -> checkAdmin(req, res));
+		get("/uploadImage", (req, res) -> uploadImage(req, res));
+	        get("/viewImages", (req, res) -> viewImages(req, res));
 	}
 
 }
